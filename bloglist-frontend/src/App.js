@@ -62,6 +62,13 @@ const App = () => {
       .sort((a, b) => b.likes - a.likes))
   }
 
+  const removeBlog = async blog => {
+    if (window.confirm(`Remove blog ${blog.name} by ${blog.author}`)) {
+      await blogService.remove(blog.id)
+      setBlogs(blogs.filter(b => b.id !== blog.id))
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -102,7 +109,7 @@ const App = () => {
         <NewBlog blogs={blogs} setBlogs={setBlogs} notify={notify} blogRef={newBlogRef}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} />
       )}
     </div>
   )
