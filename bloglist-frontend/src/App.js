@@ -55,6 +55,11 @@ const App = () => {
 
   const newBlogRef = React.createRef()
 
+  const likeBlog = async (id, blogObject) => {
+    const updatedBlog = await blogService.update(id, blogObject)
+    setBlogs(blogs.map(blog => blog.id === id ? updatedBlog : blog))
+  }
+
   if (user === null) {
     return (
       <div>
@@ -95,7 +100,7 @@ const App = () => {
         <NewBlog blogs={blogs} setBlogs={setBlogs} notify={notify} blogRef={newBlogRef}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog}/>
       )}
     </div>
   )

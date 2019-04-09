@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, likeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -13,6 +13,17 @@ const Blog = ({ blog }) => {
 
   const showWhenExpanded = { display: expanded ? '' : 'none' }
 
+  const handleLike = () => {
+    const updatedBlog = {
+      user: blog.user.id,
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+    }
+    likeBlog(blog.id, updatedBlog)
+  }
+
   return (
     <div style={blogStyle}>
       <div onClick={() => setExpanded(!expanded)}>
@@ -20,7 +31,8 @@ const Blog = ({ blog }) => {
       </div>
       <div style={showWhenExpanded}>
         {blog.url} <br/>
-        {blog.likes} likes <button>like</button> <br/>
+        {blog.likes} likes 
+        <button onClick={handleLike}>like</button> <br/>
         added by {blog.user.name}
       </div>
     </div>
