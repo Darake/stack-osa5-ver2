@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Blog = ({ blog, likeBlog, removeBlog }) => {
+const Blog = ({ blog, likeBlog, removeBlog, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -12,6 +12,7 @@ const Blog = ({ blog, likeBlog, removeBlog }) => {
   const [expanded, setExpanded] = useState(false)
 
   const showWhenExpanded = { display: expanded ? '' : 'none' }
+  const showIfCreator = { display: blog.user.username === user.username ? '' : 'none' }
 
   const handleLike = () => {
     const updatedBlog = {
@@ -34,7 +35,7 @@ const Blog = ({ blog, likeBlog, removeBlog }) => {
         {blog.likes} likes 
         <button onClick={handleLike}>like</button> <br/>
         added by {blog.user.name} <br/>
-        <button onClick={() => removeBlog(blog)}>Remove</button>
+        <button style={showIfCreator} onClick={() => removeBlog(blog)}>Remove</button>
       </div>
     </div>
 )}
