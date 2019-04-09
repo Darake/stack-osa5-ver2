@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import NewBlog from './components/NewBlog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -9,6 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -27,10 +29,15 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const user = await loginService.login({ username, password })
-    window.localStorage.setItem('loggedUser', JSON.stringify(user))
-    setUser(user)
-    blogService.setToken(user.token)
+    try {
+      const user = await loginService.login({ username, password })
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      setUser(user)
+      blogService.setToken(user.token)
+    } catch (exception) {
+      notify('Wrong username or password', 'error')
+    }
+    
     setUsername('')
     setPassword('')   
   }
@@ -40,10 +47,16 @@ const App = () => {
     setUser(null)
   }
 
+  const notify = (message, type = null) => {
+    setNotification({ message, type })
+    setTimeout(() => setNotification(null), 3000)
+  }
+
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
+        <Notification notification={notification} />
         <form onSubmit={handleLogin}>
           <div>
             Käyttäjätunnus: 
@@ -72,9 +85,10 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification notification={notification} />
       <p>{user.name} logged in</p>
       <button onClick={() => handleLogout()}>Log out</button>
-      <NewBlog blogs={blogs} setBlogs={setBlogs}/>
+      <NewBlog blogs={blogs} setBlogs={setBlogs} notify={notify}/>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
