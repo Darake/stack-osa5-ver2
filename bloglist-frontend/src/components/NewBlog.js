@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const NewBlog = ({ blogs, setBlogs, notify }) => {
+const NewBlog = ({ blogs, setBlogs, notify, blogRef }) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
   const handleCreate = async (event) => {
     event.preventDefault()
+    blogRef.current.toggleVisibility()
     const blogObject = {
       title, author, url
     }
@@ -19,6 +20,7 @@ const NewBlog = ({ blogs, setBlogs, notify }) => {
     setTitle('')
     setAuthor('')
     setUrl('')
+
   }
 
   return (
