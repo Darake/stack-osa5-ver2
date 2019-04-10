@@ -28,10 +28,10 @@ const Blog = ({ blog, likeBlog, removeBlog, user }) => {
 
   return (
     <div style={blogStyle}>
-      <div onClick={() => setExpanded(!expanded)}>
+      <div onClick={() => setExpanded(!expanded)} className="basicInformation">
         {blog.title} by {blog.author}
       </div>
-      <div style={showWhenExpanded}>
+      <div style={showWhenExpanded} className="togglableContent">
         {blog.url} <br/>
         {blog.likes} likes
         <button onClick={handleLike}>like</button> <br/>
