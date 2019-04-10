@@ -30,28 +30,28 @@ const NewBlog = ({ blogs, setBlogs, notify, blogRef }) => {
         <div>
           Title:
           <input
-          type="text"
-          value={title}
-          name="Title"
-          onChange={({ target }) => setTitle(target.value)}
-        />
+            type="text"
+            value={title}
+            name="Title"
+            onChange={({ target }) => setTitle(target.value)}
+          />
         </div>
         <div>
           Author:
           <input
-          type="text"
-          value={author}
-          name="Aurhot"
-          onChange={({ target }) => setAuthor(target.value)}
+            type="text"
+            value={author}
+            name="Aurhot"
+            onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
         <div>
           URL:
           <input
-          type="text"
-          value={url}
-          name="URL"
-          onChange={({ target }) => setUrl(target.value)}
+            type="text"
+            value={url}
+            name="URL"
+            onChange={({ target }) => setUrl(target.value)}
           />
         </div>
         <button type="submit">Create</button>

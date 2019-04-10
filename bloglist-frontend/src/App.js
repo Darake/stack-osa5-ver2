@@ -16,7 +16,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort((a, b) => b.likes - a.likes) )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const App = () => {
   }, [])
 
   const handleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
@@ -38,9 +38,9 @@ const App = () => {
     } catch (exception) {
       notify('Wrong username or password', 'error')
     }
-    
+
     setUsername('')
-    setPassword('')   
+    setPassword('')
   }
 
   const handleLogout = () => {
@@ -77,21 +77,21 @@ const App = () => {
         <Notification notification={notification} />
         <form onSubmit={handleLogin}>
           <div>
-            Käyttäjätunnus: 
+            Käyttäjätunnus:
             <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
             />
           </div>
           <div>
-            Salasana: 
+            Salasana:
             <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
             />
           </div>
           <button type="submit">Kirjaudu</button>
@@ -111,11 +111,11 @@ const App = () => {
       </Togglable>
       {blogs.map(blog =>
         <Blog
-        key={blog.id}
-        blog={blog}
-        likeBlog={likeBlog}
-        removeBlog={removeBlog}
-        user={user}
+          key={blog.id}
+          blog={blog}
+          likeBlog={likeBlog}
+          removeBlog={removeBlog}
+          user={user}
         />
       )}
     </div>

@@ -33,13 +33,13 @@ const Blog = ({ blog, likeBlog, removeBlog, user }) => {
       </div>
       <div style={showWhenExpanded}>
         {blog.url} <br/>
-        {blog.likes} likes 
+        {blog.likes} likes
         <button onClick={handleLike}>like</button> <br/>
         added by {blog.user.name} <br/>
         <button style={showIfCreator} onClick={() => removeBlog(blog)}>Remove</button>
       </div>
     </div>
-)}
+  )}
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
