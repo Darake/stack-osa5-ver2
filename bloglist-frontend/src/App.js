@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useField } from './hooks'
 import Blog from './components/Blog'
 import NewBlog from './components/NewBlog'
 import Notification from './components/Notification'
@@ -8,8 +9,8 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, resetUsername] = useField('text')
+  const [password, resetPassword] = useField('password')
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
 
@@ -31,7 +32,10 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const user = await loginService.login({ username, password })
+      const user = await loginService.login({
+        username: username.value,
+        password: password.value
+      })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
       setUser(user)
       blogService.setToken(user.token)
@@ -39,8 +43,8 @@ const App = () => {
       notify('Wrong username or password', 'error')
     }
 
-    setUsername('')
-    setPassword('')
+    resetUsername()
+    resetPassword()
   }
 
   const handleLogout = () => {
@@ -78,21 +82,11 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             Käyttäjätunnus:
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
+            <input {...username} />
           </div>
           <div>
             Salasana:
-            <input
-              type="password"
-              value={password}
-              name="Password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
+            <input {...password} />
           </div>
           <button type="submit">Kirjaudu</button>
         </form>
